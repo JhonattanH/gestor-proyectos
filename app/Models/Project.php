@@ -9,6 +9,7 @@ class Project extends Model
     // Campos permitidos para guardar
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'status',
     ];
 }

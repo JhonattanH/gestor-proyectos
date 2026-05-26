@@ -20,8 +20,12 @@ return new class extends Migration
         // Descripción corta
         $table->text('description')->nullable();
 
+        //Mostrar status
+        $table->string('status')->default('pendiente');
+        
         $table->timestamps();
         });
+    
     }
 
     /**
