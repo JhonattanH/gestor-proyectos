@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Task;
 
 class Project extends Model
 {
-    // Campos permitidos para guardar
-    protected $fillable = [
-        'name',
-        'description',
-        'status',
-    ];
+    protected $fillable = ['name', 'description', 'status', 'priority'];
+
+    // Relación con tareas
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

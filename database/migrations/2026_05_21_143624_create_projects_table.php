@@ -22,6 +22,9 @@ return new class extends Migration
 
         //Mostrar status
         $table->string('status')->default('pendiente');
+
+        //Mostrar Prioridad
+        $table->string('priority')->default('media');
         
         $table->timestamps();
         });

@@ -19,9 +19,10 @@ Class ProjectController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'priority' => 'nullable|in:baja,media,alta'
         ]);
 
-        Project::create(['name'=>$request->name, 'description'=>$request->description]);
+        Project::create(['name'=>$request->name, 'description'=>$request->description, 'priority'=>$request->priority]);
 
         return redirect('projects')->with('success', 'Proyecto creado exitosamente.');
     }
@@ -29,7 +30,7 @@ Class ProjectController extends Controller
     // Formulario para editar proyecto
     public function edit(Project $project)
     {
-        return view('projects.edit', compact('project'));
+            return view('projects.edit', compact('project'));
     }
 
     // Actualizar proyecto
