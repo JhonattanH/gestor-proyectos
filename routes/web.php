@@ -6,39 +6,54 @@ use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
-| Rutas de proyectos
+| Rutas protegidas
 |--------------------------------------------------------------------------
 */
 
-// Ver proyectos
-Route::get('/projects', [ProjectController::class, 'index']);
+Route::middleware('auth')->group(function () {
 
-// Guardar proyecto
-Route::post('/projects', [ProjectController::class, 'store']);
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return redirect('/projects');
+    })->middleware(['verified'])->name('dashboard');
 
-// Formulario editar
-Route::get('/projects/{project}/edit', [ProjectController::class, 'edit']);
+    // PROYECTOS
 
-// Actualizar proyecto
-Route::put('/projects/{project}', [ProjectController::class, 'update']);
+    Route::get('/projects', [ProjectController::class, 'index']);
 
-// Eliminar proyecto
-Route::delete('/projects/{project}', [ProjectController::class, 'destroy']);
+    Route::post('/projects', [ProjectController::class, 'store']);
 
-// Estado del proyecto
-Route::patch('/projects/{project}/status', [ProjectController::class, 'updateStatus']);
+    Route::get(
+        '/projects/{project}/edit',
+        [ProjectController::class, 'edit']
+    );
 
-/*
-|--------------------------------------------------------------------------
-| Rutas de tareas
-|--------------------------------------------------------------------------
-*/
+    Route::put(
+        '/projects/{project}',
+        [ProjectController::class, 'update']
+    );
 
-// Guardar tarea
-Route::post('/projects/{project}/tasks', [TaskController::class, 'store']);
+    Route::delete(
+        '/projects/{project}',
+        [ProjectController::class, 'destroy']
+    );
 
-// Completar tarea
-Route::patch('/tasks/{task}/complete', [TaskController::class, 'complete']);
+    // TAREAS
 
-// Eliminar tarea
-Route::delete('/tasks/{task}', [TaskController::class, 'destroy']);
+    Route::post(
+        '/projects/{project}/tasks',
+        [TaskController::class, 'store']
+    );
+
+    Route::put(
+        '/tasks/{task}/complete',
+        [TaskController::class, 'complete']
+    );
+
+    Route::delete(
+        '/tasks/{task}',
+        [TaskController::class, 'destroy']
+    );
+});
+
+require __DIR__.'/auth.php';
